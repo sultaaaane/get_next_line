@@ -6,7 +6,7 @@
 /*   By: mbentahi <mbentahi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/08 18:07:23 by mbentahi          #+#    #+#             */
-/*   Updated: 2023/12/12 21:37:19 by mbentahi         ###   ########.fr       */
+/*   Updated: 2023/12/13 10:21:17 by mbentahi         ###   ########.fr       */
 /*                                                                            */
 /******************************************************************************/
 
@@ -38,28 +38,27 @@ char	*ft_buffer_reader(char *str, int fd)
 	if (!buffer)
 		return (NULL);
 	read_bytes = 1;
-	while (read_bytes > 0)
+	while (read_bytes > 0 && !ft_strchr(str, '\n'))
 	{
 		read_bytes = read(fd, buffer, BUFFER_SIZE);
 		if (read_bytes < 0)
 			return (free(str), free(buffer), NULL);
 		buffer[read_bytes] = '\0';
 		str = ft_strjoin(str, buffer);
-		if (ft_strchr(str, '\n'))
-			return (free(buffer), str);
 	}
 	return (free(buffer), str);
 }
-char	*ft_readline(char *str, char *line)
+char	*ft_readline(char *str)
 {
-	int	i;
+	int		i;
+	char	*line;
 
 	i = 0;
 	while (str[i] && str[i] != '\n')
 		i++;
 	if (str[i] == '\n')
 		i++;
-	line = malloc(sizeof(char) * (i + 2));
+	line = malloc(sizeof(char) * (i) + 1);
 	if (!line)
 		return (NULL);
 	i = 0;
@@ -93,7 +92,7 @@ char	*ft_line_remover(char *str)
 	y = 0;
 	while (str[y])
 		y++;
-	holder = malloc(sizeof(char) * (y - i + 2));
+	holder = malloc(sizeof(char) * (y - i + 1));
 	if (!holder)
 		return (free(str), NULL);
 	y = 0;
@@ -112,11 +111,10 @@ char	*get_next_line(int fd)
 	static char	*str;
 	char		*line;
 
-	line = NULL;
 	str = ft_buffer_reader(str, fd);
 	if (!str)
 		return (NULL);
-	line = ft_readline(str, line);
+	line = ft_readline(str);
 	str = ft_line_remover(str);
 	if (!str)
 		return (NULL);
@@ -132,11 +130,8 @@ int	main(void)
 	fd = open("tests", O_RDWR);
 	str = get_next_line(fd);
 
-	while (str)
-	{
-		free(str);
-		str = get_next_line(fd);
-	}
+	-printf("%s", str);
+	free(str);
 
 	return (0);
 }

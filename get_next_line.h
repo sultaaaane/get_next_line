@@ -6,7 +6,7 @@
 /*   By: mbentahi <mbentahi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/08 18:11:39 by mbentahi          #+#    #+#             */
-/*   Updated: 2023/12/12 21:37:23 by mbentahi         ###   ########.fr       */
+/*   Updated: 2023/12/13 10:06:22 by mbentahi         ###   ########.fr       */
 /*                                                                            */
 /******************************************************************************/
 
@@ -14,7 +14,7 @@
 # define GET_NEXT_LINE_H
 
 # ifndef BUFFER_SIZE
-#  define BUFFER_SIZE 55555
+#  define BUFFER_SIZE 1
 # endif
 
 #include <unistd.h>
