@@ -6,7 +6,7 @@
 /*   By: mbentahi <mbentahi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/14 14:07:22 by mbentahi          #+#    #+#             */
-/*   Updated: 2023/12/14 14:07:34 by mbentahi         ###   ########.fr       */
+/*   Updated: 2023/12/15 15:59:48 by mbentahi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,6 +66,12 @@ char	*ft_strjoin(char *s1, char *s2)
 	size_t	s2_len;
 	char	*str;
 
+	if (!s1)
+		return (ft_strdup(""));
+	if (!s1)
+		return (ft_strdup(s2));
+	if (!s2)
+		return (ft_strdup(s1));
 	s1_len = ft_strlen(s1);
 	s2_len = ft_strlen(s2);
 	str = malloc((s1_len + s2_len + 1) * sizeof(char));

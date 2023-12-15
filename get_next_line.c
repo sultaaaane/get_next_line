@@ -6,7 +6,7 @@
 /*   By: mbentahi <mbentahi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/14 14:07:43 by mbentahi          #+#    #+#             */
-/*   Updated: 2023/12/15 10:11:12 by mbentahi         ###   ########.fr       */
+/*   Updated: 2023/12/15 15:59:43 by mbentahi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ size_t	ft_strlen(const char *str)
 	size_t	i;
 
 	i = 0;
-	while (str[i])
+	while (str && str[i])
 		i++;
 	return (i);
 }
@@ -34,7 +34,7 @@ char	*ft_buffer_reader(char *str, int fd)
 			return (NULL);
 		*str = 0;
 	}
-	buffer = malloc(BUFFER_SIZE + 1);
+	buffer = malloc((size_t)BUFFER_SIZE + 1);
 	read_bytes = 1;
 	while (read_bytes > 0 && !ft_strchr(str, '\n'))
 	{
@@ -113,24 +113,24 @@ char	*get_next_line(int fd)
 	line = ft_readline(str);
 	str = ft_line_remover(str);
 	if (!str)
-		return (NULL);
+		return (free(line), NULL);
 	return (line);
 }
 
+// int	main(void)
+// {
+// 	int i;
+// 	char *str;
+// 	int fd;
 
-int	main(void)
-{
-	int i;
-	char *str;
-	int fd;
-
-	fd = open("tests", O_RDWR);
-	str = get_next_line(fd);
-	while (str) {
-	printf("%s", str);
-	free(str);
-	str = get_next_line(fd);
-	}
-	free(str);
-	return (0);
-}
+// 	fd = open("tests", O_RDWR);
+// 	str = get_next_line(fd);
+// 	while (str)
+// 	{
+// 		printf("%s", str);
+// 		free(str);
+// 		str = get_next_line(fd);
+// 	}
+// 	free(str);
+// 	return (0);
+// }
