@@ -1,16 +1,16 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   get_next_line.c                                    :+:      :+:    :+:   */
+/*   get_next_line_bonus.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mbentahi <mbentahi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/12/14 14:07:43 by mbentahi          #+#    #+#             */
-/*   Updated: 2023/12/16 15:04:24 by mbentahi         ###   ########.fr       */
+/*   Created: 2023/12/16 09:05:11 by mbentahi          #+#    #+#             */
+/*   Updated: 2023/12/16 15:04:20 by mbentahi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "get_next_line.h"
+#include "get_next_line_bonus.h"
 
 size_t	ft_strlen(const char *str)
 {
@@ -104,17 +104,38 @@ char	*ft_line_remover(char *str)
 
 char	*get_next_line(int fd)
 {
-	static char	*str;
+	static char	*str[FOPEN_MAX];
 	char		*line;
 
-	if (fd < 0)
+	if (fd < 0 || fd > FOPEN_MAX)
 		return (NULL);
-	str = ft_buffer_reader(str, fd);
-	if (!str)
+	str[fd] = ft_buffer_reader(str[fd], fd);
+	if (!str[fd])
 		return (NULL);
-	line = ft_readline(str);
-	str = ft_line_remover(str);
-	if (!str)
+	line = ft_readline(str[fd]);
+	str[fd] = ft_line_remover(str[fd]);
+	if (!str[fd])
 		return (free(line), NULL);
 	return (line);
 }
+// int	main(void)
+// {
+// 	char *str;
+// 	int fd;
+// 	int fd1;
+// 	fd = open("get_next_line.c", O_RDONLY);
+// 	fd1 = open("get_next_line.c", O_RDONLY);
+// 	while (1)
+// 	{
+// 		str = get_next_line(fd);
+// 		printf("%s", str);
+// 		if (!str)
+// 			break;
+// 		// lseek(fd, 0, 0);
+// 		str = get_next_line(fd1);
+// 		printf("%s", str);
+// 		free(str);
+// 	}
+// 	free(str);
+// 	return (0);
+// }
